@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1713">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="월남뽕">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>월남뽕 · 혼자하기</title>
+<style>
+:root{--bg:#0b1713;--panel:#172a23;--panel2:#20382f;--gold:#ffd45a;--red:#ef7177;--green:#71e0a1;--text:#fff7e6;--muted:#aabeb4;--line:#335a4d}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);background:radial-gradient(circle at top,#285044,#0b1713 58%);min-height:100vh}
+.wrap{max-width:1180px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.title{font-size:30px;font-weight:950}.sub{color:var(--muted);font-size:13px;margin-top:4px}.panel{background:rgba(23,42,35,.94);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 18px 45px rgba(0,0,0,.22)}
+.controls{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin:18px 0}.field{display:flex;flex-direction:column;gap:6px}.field label,.tiny{font-size:12px;color:var(--muted)}select,input,button{font:inherit}select,input{background:#0d211a;color:var(--text);border:1px solid #43695b;border-radius:11px;padding:10px 11px}button{border:0;border-radius:11px;padding:11px 14px;font-weight:900;cursor:pointer;transition:none;flex:0 0 auto}.controls > button{min-width:110px;height:44px}.actions button,.betrow button{height:44px}.primary{background:var(--gold);color:#33280a}.secondary{background:#355d4f;color:white}.danger{background:#74383c;color:white}.chip{padding:7px 11px;border-radius:999px;background:#264b3e;font-size:12px;font-weight:800}
+.status{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.turn{color:var(--gold);font-weight:900}.table{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.seat{background:rgba(13,31,24,.92);border:1px solid var(--line);border-radius:16px;padding:12px;min-height:112px}.seat.active{outline:2px solid var(--gold);box-shadow:0 0 0 5px rgba(255,212,90,.08)}.seat.me{background:linear-gradient(160deg,#1e332a,#10241c)}.name{font-weight:900}.coins{color:var(--green);font-size:13px;margin-top:4px}.move{font-size:12px;color:var(--muted);margin-top:12px;min-height:18px}.betline{font-size:11px;color:#d9cfa8;margin-top:4px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}.potbox{text-align:center}.potamount{font-size:38px;font-weight:950;color:var(--gold);margin-top:2px}.potcaption{font-size:12px;color:var(--muted)}.cards{display:flex;justify-content:center;gap:14px;min-height:190px;margin:18px 0;flex-wrap:wrap}.hwa{position:relative;width:126px;height:176px;border-radius:15px;background:linear-gradient(145deg,#fffdf2,#eee7cd);border:4px solid #d2c6a4;box-shadow:0 16px 28px rgba(0,0,0,.28);color:#222;overflow:hidden}.hwa .frame{position:absolute;inset:6px;border:2px solid #b6a780;border-radius:10px}.hwa .month{position:absolute;top:12px;left:12px;font-size:13px;font-weight:950}.hwa .art{display:none}.hwa .type{position:absolute;bottom:10px;right:12px;font-size:11px;font-weight:900;z-index:2}.hidden{background:linear-gradient(150deg,#8d2536,#431521);border-color:#c57c83;color:#fff}.hidden .art{display:flex;font-size:52px;z-index:1}.hidden .month,.hidden .type{color:#f8dddf}
+.result{font-size:21px;font-weight:950;min-height:32px;margin-top:4px}#actions,.actions{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:44px 44px 44px;gap:8px 10px;margin-top:14px;min-height:148px;height:148px;align-items:stretch}.actions button,.actions input{min-width:0;width:100%;height:44px}.action-second{grid-column:1 / 4}.action-next{grid-column:4 / 7}.action-betinput{grid-column:1 / 7;text-align:center!important}.action-max{grid-column:1 / 3}.action-bet{grid-column:3 / 5}.action-fold{grid-column:5 / 7}.keyhint{opacity:.75;font-size:11px;margin-left:4px}.monthpill:hover{border-color:var(--gold)}.betrow input{width:150px;text-align:right;font-weight:900}.maxbtn{background:#d9b948;color:#241d0a}.bankrupt{opacity:.48;filter:grayscale(.65)}.months{display:none;grid-template-columns:repeat(12,minmax(42px,1fr));gap:7px;margin:14px 0}.monthpill{position:relative;background:#10231b;border:1px solid #315247;border-radius:12px;padding:7px 4px;text-align:center;font-size:11px;cursor:default}.monthpill b{display:block;font-size:16px;color:var(--gold)}.monthpill:hover{border-color:var(--gold)}.monthpill .tip{display:none;position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);background:#08140f;border:1px solid #5b6f66;border-radius:9px;padding:7px 9px;white-space:nowrap;z-index:30;color:#fff}.monthpill:hover .tip{display:block}.months-panel{display:none!important}.gameover{font-size:22px;font-weight:950;color:var(--gold);margin:10px 0}.rules{margin-top:14px;padding:12px;background:#10231b;border-radius:13px;text-align:left;font-size:12px;line-height:1.7;color:#d5ddd8}.rulehi{color:var(--gold);font-weight:900}.log{max-height:450px;overflow:auto;font-size:13px;line-height:1.6}.log div{padding:6px 0;border-bottom:1px dashed #315247}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.stat{background:#10231b;border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font-size:20px;color:var(--gold)}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.table{grid-template-columns:repeat(2,1fr)}.table .seat:last-child{grid-column:1/-1}}
+
+html{background:#0b1713;overscroll-behavior-y:none}
+body{padding-bottom:env(safe-area-inset-bottom);-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
+button,select,input{touch-action:manipulation}
+button{user-select:none;-webkit-user-select:none}
+.appbar{position:sticky;top:0;z-index:50;padding-top:env(safe-area-inset-top);background:rgba(11,23,19,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(75,120,104,.22)}
+.appbar-inner{max-width:1180px;margin:auto;padding:10px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.install-btn{display:none;background:#2a4f40;color:#fff;border:1px solid #5a8774;border-radius:999px;padding:8px 12px;font-weight:900;font-size:12px}
+.app-status{font-size:11px;color:var(--muted)}
+@media(max-width:700px){
+  body{font-size:14px}
+  .wrap{padding:10px 10px 24px}
+  .appbar-inner{padding:9px 12px}
+  .title{font-size:24px;line-height:1.1}
+  .sub{font-size:11px}
+  .panel{border-radius:16px;padding:12px}
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+  .controls .field:nth-child(5){grid-column:1/-1}
+  .controls>button{min-width:0;width:100%;height:42px}
+  .status{margin:8px 0}
+  .status .chip{font-size:11px}
+  .table{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .seat{min-height:92px;padding:9px;border-radius:13px}
+  .seat .name{font-size:13px}.seat .coins,.seat .move,.seat .betline{font-size:10px}
+  .grid{gap:10px}
+  .potamount{font-size:34px}
+  .cards{gap:8px;min-height:156px;margin:12px 0}
+  .hwa{width:96px;height:138px;border-width:3px;border-radius:12px}
+  .hwa .frame{inset:5px;border-width:1.5px}.hwa .month{top:9px;left:9px;font-size:11px}.hwa .type{bottom:8px;right:9px;font-size:9px}.hidden .art{font-size:40px}
+  #actions,.actions{grid-template-columns:repeat(6,1fr);grid-template-rows:46px 46px 46px;height:150px;min-height:150px;gap:7px;margin-top:10px}
+  .actions button,.actions input{height:46px;border-radius:12px;font-size:13px}
+  .action-second{grid-column:1 / 5}.action-next{grid-column:5 / 7}.action-max{grid-column:1 / 3}.action-bet{grid-column:3 / 5}.action-fold{grid-column:5 / 7}
+  .rules{font-size:11px;line-height:1.6}.log{max-height:320px;font-size:12px}.stats{grid-template-columns:repeat(3,1fr)}.stat b{font-size:18px}
+  .betrow input{width:100%}
+}
+@media(orientation:landscape) and (max-height:560px){.wrap{padding-top:6px}.cards{min-height:130px;margin:8px 0}.hwa{width:82px;height:116px}.rules{display:none}.log{max-height:220px}}
+</style>
+</head>
+<body>
+<div class="appbar"><div class="appbar-inner"><div><div class="app-status">오프라인 AI 게임</div></div><button class="install-btn" id="installBtn">홈 화면에 설치</button></div></div>
+<div class="wrap">
+  <div class="top">
+    <div><div class="title">🌙 월남뽕 · 혼자하기</div><div class="sub">오프라인 · 나 + 컴퓨터 · 화투덱 설정 가능</div></div>
+    <div class="chip" id="turnBadge">게임 준비</div>
+  </div>
+
+  <div class="panel controls">
+    <div class="field"><label>게임 인원</label><select id="playerCount"><option value="2">2명</option><option value="3">3명</option><option value="4">4명</option><option value="5" selected>5명</option></select></div>
+    <div class="field"><label>화투 덱 수</label><select id="deckCount"><option value="1">1덱 (48장)</option><option value="2" selected>2덱 (96장)</option><option value="3">3덱 (144장)</option><option value="4">4덱 (192장)</option></select></div>
+    <div class="field"><label>시작 칩</label><select id="startCoins"><option value="1000">1,000</option><option value="3000" selected>3,000</option><option value="10000">10,000</option><option value="30000">30,000</option></select></div><div class="field"><label>기본판돈</label><input id="baseAnte" type="number" min="1" step="1" value="100"></div>
+    <div class="field"><label>컴퓨터 AI 선택</label><div id="aiSelects" style="display:flex;gap:6px;flex-wrap:wrap"></div></div>
+    <button class="primary" id="newGame">새 게임</button>
+    <button class="secondary" id="nextTurn">다음 턴</button>
+  </div>
+
+  <div class="status"><div id="statusText" class="turn">게임 인원과 덱을 정하고 새 게임을 시작하세요.</div><div class="chip">덱 <b id="deckLeft">0</b>장 · 중앙 판돈 <b id="potTop">0</b>칩</div></div>
+  <div class="panel months-panel" id="monthsPanel"><div style="display:flex;justify-content:space-between;align-items:center"><b>월별 남은 화투패</b><span class="tiny">마우스를 올리면 남은 장수를 확인할 수 있습니다.</span></div><div class="months" id="months"></div></div>
+  <div class="table" id="table"></div>
+
+  <div class="grid">
+    <section class="panel potbox">
+      <div class="potcaption">현재 중앙 판돈</div>
+      <div class="potamount" id="pot">0</div>
+      <div class="potcaption">내 턴 최대 베팅액 = 중앙 판돈</div>
+      <div class="cards" id="cards"></div>
+      <div class="result" id="result"></div>
+      <div id="actions"></div>
+      <div class="rules">
+        <div><span class="rulehi">승리 조건:</span> 세 번째 화투의 월 숫자가 첫 두 장의 숫자 <b>사이</b>에 들어와야 승리합니다.</div>
+        <div><span class="rulehi">패배 조건:</span> 두 숫자와 같거나 그보다 작거나 크면 패배합니다. 즉 <b>양 끝 숫자와 같은 경우도 패배</b>입니다.</div>
+        <div><span class="rulehi">베팅:</span> 현재 중앙 판돈까지만 자유롭게 금액을 입력할 수 있습니다.</div>
+        <div><span class="rulehi">정산:</span> 승리하면 중앙 판돈에서 베팅액을 가져오고, 패배하면 베팅액이 중앙 판돈에 더해집니다.</div><div><span class="rulehi">기본판돈:</span> 중앙 판돈이 0칩이 되면 다음 턴 시작 전에 생존 참가자들이 설정한 기본판돈을 냅니다.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>게임 기록</b><span class="tiny" id="record"></span></div>
+      <div class="stats"><div class="stat"><span class="tiny">승</span><b id="wins">0</b></div><div class="stat"><span class="tiny">패</span><b id="losses">0</b></div><div class="stat"><span class="tiny">현재 칩</span><b id="myCoins">0</b></div></div>
+      <div id="cardHistory" class="log"></div><div class="tiny" style="margin:10px 0 6px">진행 기록</div><div class="log" id="log"></div>
+    </section>
+  </div>
+</div>
+<script>
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt', (e)=>{e.preventDefault();deferredInstallPrompt=e;const b=document.getElementById('installBtn');if(b)b.style.display='inline-flex';});
+document.getElementById('installBtn')?.addEventListener('click', async()=>{if(!deferredInstallPrompt)return;deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;document.getElementById('installBtn').style.display='none';});
+window.addEventListener('appinstalled',()=>{const b=document.getElementById('installBtn');if(b)b.style.display='none';});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
+
+const HWA=[
+ {m:1,a:'🌸',t:'광'}, {m:2,a:'🐦',t:'열'}, {m:3,a:'🌺',t:'광'}, {m:4,a:'🌿',t:'열'},
+ {m:5,a:'🌼',t:'열'}, {m:6,a:'🦋',t:'띠'}, {m:7,a:'🌾',t:'열'}, {m:8,a:'🌕',t:'광'},
+ {m:9,a:'🍶',t:'열'}, {m:10,a:'🍁',t:'열'}, {m:11,a:'🦚',t:'광'}, {m:12,a:'🐦',t:'광'}
+];
+const AI=[
+ {name:'AI1 · 공격형', key:'aggressive'},
+ {name:'AI2 · 균형형', key:'balanced'},
+ {name:'AI3 · 보수형', key:'conservative'},
+ {name:'AI4 · 기회주의형', key:'opportunistic'},
+ {name:'AI5 · 진보형', key:'progressive'}
+];
+const state={players:[],deck:[],shown:[],phase:'idle',pot:0,turn:0,round:0,wins:0,losses:0,deckN:2,baseAnte:100,history:[],waitingNext:false,bonusTurnPlayer:null};
+const $=id=>document.getElementById(id);
+function money(n){return Math.max(0,Math.round(n)).toLocaleString()}
+function log(t){$('log').insertAdjacentHTML('afterbegin','<div>'+t+'</div>')}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function makeDeck(n){const d=[];for(let k=0;k<n;k++)for(const x of HWA)for(let copy=0;copy<4;copy++)d.push({month:x.m,art:x.a,type:x.t});return shuffle(d)}
+function cardLabel(c){return `${c.month}월 ${c.art} ${c.type}`}
+function cardHtml(c,hidden=false){if(hidden)return '<div class="hwa hidden"><div class="frame"></div><div class="month">월남뽕</div><div class="art">?</div><div class="type">복면패</div></div>';return `<div class="hwa"><div class="frame"></div><div class="month">${c.month}월</div><div class="art" style="display:flex;align-items:center;justify-content:center;font-size:50px;position:absolute;inset:28px 8px 28px 8px">${c.art}</div><div class="type">${c.type}</div></div>`}
+function refillIfNeeded(){if(state.deck.length<3){state.deck=makeDeck(state.deckN);log('화투 덱을 다 써서 자동으로 다시 섞었습니다.')}}
+function activePlayers(){return state.players.filter(p=>!p.bankrupt)}
+function seedPot(){state.pot=0}
+function collectAnteIfEmpty(){if(state.pot>0)return true;const ante=Math.max(1,Math.floor(state.baseAnte));const active=activePlayers();if(!active.length)return false;let paid=0;active.forEach(p=>{const pay=Math.min(ante,p.coins);p.coins-=pay;paid+=pay;if(pay>0)log(`💰 ${p.name} 기본판돈 ${money(pay)}칩 납부`);if(p.coins===0){p.bankrupt=true;p.status='💀 파산'}});state.pot+=paid;log(`🏦 중앙 판돈 충전 · ${money(paid)}칩`);return state.pot>0}
+function nextAlive(from){for(let step=1;step<=state.players.length;step++){const i=(from+step)%state.players.length;if(!state.players[i].bankrupt)return i}return from}
+function checkGameOver(){const alive=activePlayers();if(alive.length<=1){state.phase='gameover';state.waitingNext=false;const winner=alive[0];if(winner){winner.status='🏆 최종 승리';$('result').textContent=`🏆 ${winner.name}이(가) 최종 승리했습니다!`;setStatus('게임 종료 · 마지막 생존자');log(`🏆 게임 종료 · 마지막 생존자 ${winner.name}`)}else{ $('result').textContent='게임 종료';setStatus('게임 종료');log('게임 종료 · 생존 플레이어 없음')}render();return true}return false}
+function recordFor(p){let h=state.history.find(h=>h.round===state.round&&h.player===p.name);if(!h){h={round:state.round,player:p.name,cards:[],bet:0,result:''};state.history.unshift(h)}return h}
+function actionLayout(left,right){return `<div class="actioncol">${left.join('')}</div><div class="actioncol right">${right.join('')}</div>`}
+function renderAISelects(){
+ const wrap=$('aiSelects'); if(!wrap) return;
+ const n=Math.max(1,Number($('playerCount').value)-1);
+ const prev=[...wrap.querySelectorAll('.aiPick')].map(x=>x.value);
+ wrap.innerHTML='';
+ for(let i=0;i<n;i++){
+   const field=document.createElement('div'); field.style.display='flex'; field.style.alignItems='center'; field.style.gap='4px';
+   const lab=document.createElement('span'); lab.className='tiny'; lab.textContent=`AI${i+1}`;
+   const sel=document.createElement('select'); sel.className='aiPick'; sel.title=`컴퓨터 ${i+1}의 AI 선택`;
+   AI.forEach((a,j)=>{const o=document.createElement('option');o.value=a.key;o.textContent=a.name;o.selected=prev[i]===a.key || (!prev[i]&&j===i%AI.length);sel.appendChild(o)});
+   field.append(lab,sel);wrap.appendChild(field);
+ }
+}
+$('playerCount').addEventListener('change',renderAISelects);
+renderAISelects();
+
+function render(){
+ $('pot').textContent=money(state.pot);$('potTop').textContent=money(state.pot);$('deckLeft').textContent=state.deck.length;$('wins').textContent=state.wins;$('losses').textContent=state.losses;$('myCoins').textContent=state.players[0]?money(state.players[0].coins):'0';$('record').textContent=state.players.length?`${state.round}턴`:'게임 준비';
+ $('cardHistory').innerHTML=state.history.length?state.history.map(h=>`<div><b>턴 ${h.round} · ${h.player}</b><br>🎴 ${h.cards.length?h.cards.map(cardLabel).join(' → '):'카드 없음'}${h.bet?` · 베팅 ${money(h.bet)}칩`:''}${h.result?` · <span style="color:var(--gold)">${h.result}</span>`:''}</div>`).join(''):'<div class="tiny">아직 카드 기록이 없습니다.</div>';
+ $('turnBadge').textContent=state.players.length?(state.phase==='gameover'?'게임 종료':(state.waitingNext?'다음 진행 대기':`${state.round||0}턴 · ${state.players[state.turn]?.name||''}`)):'게임 준비';
+ const counts=Array(13).fill(0);state.deck.forEach(c=>counts[c.month]++);$('months').innerHTML=HWA.map(x=>`<div class="monthpill"><b>${x.m}월</b>${counts[x.m]}장<div class="tip">${x.m}월 남은 패: <b>${counts[x.m]}장</b> · 전체 덱: ${state.deck.length}장</div></div>`).join('');
+ $('table').innerHTML=state.players.map((p,i)=>{const classes=['seat'];if(i===state.turn&&state.phase!=='gameover'&&!p.bankrupt)classes.push('active');if(i===0)classes.push('me');if(p.bankrupt)classes.push('bankrupt');return `<div class="${classes.join(' ')}"><div class="name">${p.bankrupt?'💀 ':''}${p.name}${i===0?' (나)':''}</div><div class="coins">${money(p.coins)}칩</div><div class="move">${p.status||'대기'}</div><div class="betline">${p.bet?`이번 베팅 ${money(p.bet)}칩`:''}</div></div>`}).join('');
+ $('cards').innerHTML=state.shown.length?state.shown.map(c=>cardHtml(c,false)).join(''):'';
+ $('nextTurn').disabled=!state.waitingNext||state.phase==='gameover';
+ $('nextTurn').textContent=state.phase==='gameover'?'게임 종료':'다음';
+ if(state.waitingNext){$('actions').innerHTML='<button class="secondary disabledAction action-second" disabled>두 번째 카드 받기 <span class="keyhint">Q</span></button><button class="primary action-next" id="nextInline">다음 <span class="keyhint">W</span></button><input class="action-betinput" disabled placeholder="-- 베팅할 금액 --"><button class="maxbtn disabledAction action-max" disabled>MAX <span class="keyhint">A</span></button><button class="primary disabledAction action-bet" disabled>베팅 <span class="keyhint">S</span></button><button class="danger disabledAction action-fold" disabled>포기 <span class="keyhint">D</span></button>';const b=$('nextInline');if(b)b.onclick=advanceNext}
+}
+
+function setStatus(text){$('statusText').textContent=text}
+function clearActions(){if(!state.waitingNext)$('actions').innerHTML='<div class="actions"></div>'}
+function finishTurn(p,resultText){const h=recordFor(p);h.cards=p.cards.slice();h.result=resultText;state.phase='idle';state.waitingNext=true;p.bet=p.bet||0;checkGameOver();render()}
+function startTurn(){
+ if(checkGameOver())return;
+ if(!collectAnteIfEmpty()){checkGameOver();return}
+ state.round++;state.shown=[];state.phase='first';state.waitingNext=false;state.turn=state.turn%state.players.length;if(state.players[state.turn].bankrupt)state.turn=nextAlive(state.turn);
+ const p=state.players[state.turn];p.status='첫 번째 카드 받는 중';p.bet=0;p.cards=[];refillIfNeeded();const first=state.deck.pop();state.shown=[first];p.cards.push(first);recordFor(p).cards=p.cards.slice();log(`🎴 ${p.name} · 첫 번째 카드 ${cardLabel(first)}`);setStatus(`${p.name} · 첫 번째 카드`);$('result').textContent='';render();
+ if(state.turn===0)showSecondChoice();else computerTurn(p);
+}
+function advanceNext(){if(!state.waitingNext||state.phase==='gameover')return;state.waitingNext=false;state.shown=[];const finished=state.turn;if(state.bonusTurnPlayer===finished && !state.players[finished].bankrupt){state.bonusTurnPlayer=null;state.turn=finished;log(`🎁 ${state.players[finished].name} · 중앙 판돈을 모두 가져가 추가 베팅 기회 획득`);startTurn();return}state.bonusTurnPlayer=null;state.turn=nextAlive(finished);if(state.turn===finished&&activePlayers().length<=1){checkGameOver();return}startTurn()}
+function showSecondChoice(){const p=state.players[0];$('actions').innerHTML='<button class="primary action-second" id="draw2">두 번째 카드 받기 <span class="keyhint">Q</span></button><button class="secondary disabledAction action-next" disabled>다음 <span class="keyhint">W</span></button><input class="action-betinput" disabled placeholder="-- 베팅할 금액 --"><button class="maxbtn disabledAction action-max" disabled>MAX <span class="keyhint">A</span></button><button class="primary disabledAction action-bet" disabled>베팅 <span class="keyhint">S</span></button><button class="danger action-fold" id="fold2">포기 <span class="keyhint">D</span></button>';$('draw2').onclick=()=>drawSecond(0);$('fold2').onclick=()=>foldSecond(0);setStatus('첫 번째 카드를 받았습니다. 두 번째 카드를 선택하세요.');render()}
+function foldSecond(i){if(state.phase!=='first'||state.turn!==i)return;const p=state.players[i];p.status='두 번째 카드 포기';if(i===0)state.losses++;recordFor(p).result='두 번째 카드 포기';log(`${p.name} · 두 번째 카드 포기 · 턴 종료`);$('result').textContent=`${p.name} · 두 번째 카드 포기`;finishTurn(p,'두 번째 카드 포기');if(i===0&&state.phase!=='gameover'){advanceNext()} }
+function computerTurn(p){log(`🤖 ${p.name} · 컴퓨터 턴 시작`);const first=p.cards[0].month;const receive=p.aiType==='progressive'?true:Math.random()<0.88;if(!receive){log(`🤖 ${p.name} · 두 번째 카드 포기`);foldSecond(state.turn);return}drawSecond(state.turn);if(state.phase==='gameover'||state.waitingNext)return;if(state.phase==='bet')aiBet()}
+function drawSecond(i){if(state.phase!=='first'||state.turn!==i)return;refillIfNeeded();const p=state.players[i];state.phase='second';const c=state.deck.pop();state.shown.push(c);p.cards.push(c);p.status='두 장 확인';recordFor(p).cards=p.cards.slice();log(`🎴 ${p.name} · 두 번째 카드 받음 · ${cardLabel(c)}`);setStatus(`${p.name} · 두 번째 카드 ${cardLabel(c)}`);render();handleSecondCards(i)}
+function handleSecondCards(i){const p=state.players[i],a=p.cards[0].month,b=p.cards[1].month;if(a===1&&b===1){const forced=Math.min(state.pot,p.coins);p.bet=forced;p.coins-=forced;state.pot+=forced;recordFor(p).bet=forced;if(p.coins===0){p.bankrupt=true;p.status='💀 파산';log(`💀 ${p.name} · 1월+1월 강제 베팅 ${money(forced)}칩 · 파산`)}else log(`⚠️ ${p.name} · 1월+1월 · ${money(forced)}칩 강제 베팅 · 턴 종료`);$('result').textContent=`⚠️ 1월 + 1월 — ${money(forced)}칩 강제 베팅`;setStatus(`${p.name} · 특수 규칙 종료 · [다음]`);finishTurn(p,p.bankrupt?'1월+1월 강제 베팅 · 파산':'1월+1월 강제 베팅 · 턴 종료');return}
+ if(a===12&&b===12){const take=state.pot;state.pot=0;p.coins+=take;p.status=`12월·12월 대승 +${money(take)}`;if(i===0)state.wins++;recordFor(p).bet=take;state.bonusTurnPlayer=i;log(`🏆 ${p.name} · 12월+12월 · 중앙 판돈 ${money(take)}칩 획득`);log(`🎁 ${p.name} · 중앙 판돈 전액 획득으로 추가 베팅 기회`);$('result').textContent=`🏆 12월 + 12월 — 중앙 판돈 ${money(take)}칩 획득`;setStatus(`${p.name} · 특수 승리 · 추가 베팅 [다음]`);finishTurn(p,'12월+12월 · 중앙 판돈 획득 · 추가 베팅');return}
+ if(state.pot<=0){p.status='중앙 판돈 0 · 턴 종료';log(`${p.name} · 중앙 판돈 0 · 베팅 없이 턴 종료`);$('result').textContent='중앙 판돈이 없어 베팅할 수 없습니다.';setStatus(`${p.name} · 턴 종료 · [다음]`);finishTurn(p,'중앙 판돈 0 · 베팅 없음');return}
+ state.phase='bet';if(i===0)showBetActions();else aiBet()}
+function showBetActions(){const p=state.players[0],maxBet=Math.min(state.pot,p.coins);if(maxBet<1){p.status='베팅 불가';setStatus('보유 칩이 없어 턴 종료 · [다음]');finishTurn(p,'베팅 불가');return}$('actions').innerHTML='<button class="secondary disabledAction action-second" disabled>두 번째 카드 받기 <span class="keyhint">Q</span></button><button class="secondary disabledAction action-next" disabled>다음 <span class="keyhint">W</span></button><input id="betInput" class="action-betinput" type="number" min="1" max="'+maxBet+'" step="1" value="'+Math.min(100,maxBet)+'" placeholder="-- 베팅할 금액 --"><button class="maxbtn action-max" id="maxBtn">MAX <span class="keyhint">A</span></button><button class="primary action-bet" id="betBtn">베팅 <span class="keyhint">S</span></button><button class="danger action-fold" id="foldBtn">포기 <span class="keyhint">D</span></button>';$('maxBtn').onclick=()=>playerBet(maxBet);$('betBtn').onclick=()=>playerBet(Number($('betInput').value));$('foldBtn').onclick=playerFold;const input=$('betInput');input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();playerBet(Number(input.value))}};setStatus('두 장 확인 · 베팅 금액을 입력하세요.');render()}
+function playerBet(v){if(state.phase!=='bet'||state.turn!==0)return;v=Math.floor(v);const p=state.players[0],maxBet=Math.min(state.pot,p.coins);if(!Number.isFinite(v)||v<1||v>maxBet){setStatus(`베팅은 ${money(maxBet)}칩 이하입니다.`);return}p.bet=v;p.status=`${money(v)}칩 베팅`;recordFor(p).bet=v;log(`💰 ${p.name} · ${money(v)}칩 베팅`);resolveTurn(v,0)}
+function playerFold(){if(state.phase!=='bet'||state.turn!==0)return;const p=state.players[0];p.status='베팅 포기';state.losses++;log('당신 · 베팅 포기 · 턴 종료');$('result').textContent='베팅 포기';finishTurn(p,'베팅 포기');if(state.phase!=='gameover'){advanceNext()}}
+function aiBet(){
+ const p=state.players[state.turn];
+ const a=p.cards[0].month,b=p.cards[1].month,lo=Math.min(a,b),hi=Math.max(a,b);
+ const range=Math.max(0,hi-lo-1);
+ const counts=Array(13).fill(0); for(const c of state.deck) counts[c.month]++;
+ let winCards=0; for(let m=lo+1;m<hi;m++) winCards+=counts[m];
+ const total=Math.max(1,state.deck.length), winProb=winCards/total;
+ const type=p.aiType||'balanced';
+ let target;
+ if(type==='aggressive') target=0.75;
+ else if(type==='conservative') target=0.55;
+ else if(type==='opportunistic') target=0.65;
+ else target=0.65;
+ let betRatio;
+ if(type==='progressive'){
+   const diff=Math.abs(a-b);
+   if(diff<6){
+     p.status='두 카드 차이 6 미만 · 무조건 포기';
+     recordFor(p).result='진보형 · 두 카드 차이 6 미만 · 포기';
+     log(`🤖 ${p.name} (진보형) · 두 카드 차이 ${diff} · 6 미만이므로 무조건 포기`);
+     $('result').textContent='🤖 진보형 · 두 카드 차이 6 미만 · 포기';
+     finishTurn(p,'진보형 · 차이 6 미만 · 포기');
+     return;
+   }
+   const max=Math.min(state.pot,p.coins);
+   if(max>0){
+     p.bet=max; recordFor(p).bet=max;
+     log(`🤖 ${p.name} (진보형) · 두 카드 차이 ${diff} · 무조건 MAX ${money(max)}칩 베팅`);
+     resolveTurn(max,state.turn); return;
+   }
+   p.status='베팅 불가';
+   log(`🤖 ${p.name} (진보형) · MAX 베팅 불가 · 턴 종료`);
+   finishTurn(p,'진보형 · MAX 베팅 불가');
+   return;
+ }
+ if(winProb<0.18) betRatio= type==='aggressive'?0.12:0.05;
+ else if(winProb<0.30) betRatio= type==='conservative'?0.08:(type==='aggressive'?0.28:0.16);
+ else if(winProb<0.45) betRatio= type==='conservative'?0.14:(type==='opportunistic'?0.28:0.22);
+ else if(winProb<0.60) betRatio= type==='conservative'?0.24:(type==='aggressive'?0.62:(type==='opportunistic'?0.5:0.42));
+ else betRatio= type==='conservative'?0.38:(type==='aggressive'?1:(type==='opportunistic'?0.85:0.68));
+ const pressure = state.pot>=p.coins ? 1 : Math.min(1.15, 1 + state.pot/Math.max(1,p.coins)*0.08);
+ if(type==='opportunistic' && state.pot>=p.coins*2 && winProb>=0.35) betRatio=Math.min(1,betRatio*1.25);
+ if(type==='conservative' && p.coins<=state.baseAnte*2) betRatio=Math.min(betRatio,0.2);
+ let bet=Math.floor(state.pot*betRatio*pressure);
+ const max=Math.min(state.pot,p.coins); bet=Math.min(bet,max);
+ if(winProb>=target && max>0 && type==='aggressive') bet=max;
+ if(bet<1){p.status='베팅 불가';log(`🤖 ${p.name} (${type}) · 승률 ${(winProb*100).toFixed(1)}% · 베팅 불가 · 턴 종료`);finishTurn(p,'베팅 불가');return}
+ p.bet=bet;recordFor(p).bet=bet;
+ log(`🤖 ${p.name} (${type}) · 예상 승률 ${(winProb*100).toFixed(1)}% · ${money(bet)}칩 베팅`);
+ resolveTurn(bet,state.turn)
+}
+
+function resolveTurn(bet,i){if(state.phase!=='bet')return;state.phase='reveal';refillIfNeeded();const p=state.players[i],third=state.deck.pop();state.shown.push(third);p.cards.push(third);recordFor(p).cards=p.cards.slice();log(`🎴 ${p.name} · 세 번째 카드 ${cardLabel(third)}`);const a=p.cards[0].month,b=p.cards[1].month,c=third.month,lo=Math.min(a,b),hi=Math.max(a,b),win=(lo<c&&c<hi);if(win){const take=Math.min(bet,state.pot);state.pot-=take;p.coins+=take;p.status=`승리! +${money(take)}`;if(i===0)state.wins++;if(take>0&&state.pot===0){state.bonusTurnPlayer=i;log(`🎁 ${p.name} · 중앙 판돈 ${money(take)}칩을 전부 가져감 · 추가 베팅 기회`)}$('result').textContent=`🎉 승리 — +${money(take)}칩`;log(`✅ ${p.name} 승리 · 중앙에서 ${money(take)}칩 획득`)}else{p.coins-=bet;state.pot+=bet;p.status=`패배! +${money(bet)} 중앙`;if(i===0)state.losses++;$('result').textContent='💥 패배';log(`❌ ${p.name} 패배 · ${money(bet)}칩이 중앙으로 이동`)}if(p.coins<=0){p.coins=0;p.bankrupt=true;p.status='💀 파산';log(`💀 ${p.name} 파산 · 게임에서 탈락`)}const resultText=p.bankrupt?(win?'승리 · 이후 파산':'패배 · 파산'):(win?'승리':'패배');setStatus(`${p.name} · 턴 종료 · [다음]을 누르세요.`);finishTurn(p,resultText)}
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+  const tag = document.activeElement?.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  const k = e.key.toLowerCase();
+  if (k === 'q') {
+    const b = $('draw2');
+    if (b && !b.disabled) { e.preventDefault(); b.click(); }
+  } else if (k === 'w') {
+    if (state.waitingNext) { e.preventDefault(); advanceNext(); }
+  } else if (k === 'a') {
+    const b = $('maxBtn');
+    if (b && !b.disabled) { e.preventDefault(); b.click(); }
+  } else if (k === 's') {
+    const b = $('betBtn');
+    if (b && !b.disabled) { e.preventDefault(); b.click(); }
+  } else if (k === 'd') {
+    const b = $('fold2') || $('foldBtn');
+    if (b && !b.disabled) { e.preventDefault(); b.click(); }
+  }
+});
+$('newGame').onclick=()=>{const n=Number($('playerCount').value),chips=Math.max(1,Number($('startCoins').value));state.deckN=Number($('deckCount').value);state.baseAnte=Math.max(1,Math.floor(Number($('baseAnte').value)||100));const chosen=[...document.querySelectorAll('.aiPick')].slice(0,n-1).map((el,i)=>{const key=el.value;const meta=AI.find(x=>x.key===key)||AI[i%AI.length];return {name:meta.name,aiType:meta.key,coins:chips,status:'대기',bet:0,bankrupt:false}});state.players=[{name:'나',aiType:null,coins:chips,status:'대기',bet:0,bankrupt:false},...chosen];state.deck=makeDeck(state.deckN);state.round=0;state.wins=0;state.losses=0;state.shown=[];state.history=[];state.waitingNext=false;state.bonusTurnPlayer=null;seedPot();$('log').innerHTML='';log(`새 게임 시작 · ${n}명 · ${state.deckN}덱 · 시작 칩 ${money(chips)} · 기본판돈 ${money(state.baseAnte)}`);state.turn=0;startTurn()};
+$('nextTurn').onclick=advanceNext;
+render();
+</script>
+</body>
+</html>

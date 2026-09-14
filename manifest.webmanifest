@@ -1,0 +1,16 @@
+{
+  "name": "월남뽕 · 혼자하기",
+  "short_name": "월남뽕",
+  "lang": "ko-KR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1713",
+  "theme_color": "#0b1713",
+  "description": "화투로 즐기는 1인용 월남뽕 AI 게임",
+  "icons": [
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
