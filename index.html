@@ -176,7 +176,7 @@ function log(t){$('log').insertAdjacentHTML('afterbegin','<div>'+t+'</div>')}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function makeDeck(n){const d=[];for(let k=0;k<n;k++)for(const x of HWA)for(let copy=0;copy<4;copy++)d.push({month:x.m,art:x.a,type:x.t,img:`assets/cards/${String(x.m).padStart(2,'0')}-${copy+1}.png`});return shuffle(d)}
 function cardLabel(c){return `${c.month}월 ${c.art} ${c.type}`}
-function cardHtml(c,hidden=false){if(hidden)return '<div class="hwa hidden"><div class="frame"></div><div class="month">월남뽕</div><div class="art">?</div><div class="type">복면패</div></div>';return `<div class="hwa"><div class="frame"></div><div class="art"><img src="assets/cards/${String(c.month).padStart(2,'0')}.png" alt="${c.month}월 화투" loading="eager"></div><div class="month">${c.month}월</div><div class="type">${c.type}</div></div>`}
+function cardHtml(c,hidden=false){if(hidden)return '<div class="hwa hidden"><div class="frame"></div><div class="month">월남뽕</div><div class="art">?</div><div class="type">복면패</div></div>';return `<div class="hwa"><div class="frame"></div><div class="art"><img src="${c.img}" alt="${c.month}월 화투" loading="eager" decoding="async"></div><div class="month">${c.month}월</div><div class="type">${c.type}</div></div>`}
 function refillIfNeeded(){if(state.deck.length<3){state.deck=makeDeck(state.deckN);log('화투 덱을 다 써서 자동으로 다시 섞었습니다.')}}
 function activePlayers(){return state.players.filter(p=>!p.bankrupt)}
 function seedPot(){state.pot=0}
